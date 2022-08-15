@@ -33,8 +33,12 @@ public class CartController {
       cart = cartSvc.deserialize(c);
 
     String item = form.getFirst("item");
-    if (!isNull(item))
+    String quantity = form.getFirst("quantity");
+
+    if (!isNull(item)) {
+      item = item + " x " + quantity;
       cart.add(item);
+    }
 
     model.addAttribute("displayName", name.toUpperCase());
     model.addAttribute("contents", cartSvc.serialize(cart));
