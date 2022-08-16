@@ -27,11 +27,22 @@
           <h3>Contents</h3>
           <div>Apple</div>
           <div>Orange</div>
+
+          <!-- <div data-th-if="${!empty}">
+            <h3>Contents</h3>
+            <div data-th-each="c: ${cart}">
+              <span data-th-text="${c}"></span>
+            </div>
+          </div>
+          <div data-th-if="${empty}">
+            <h4>Your cart is empty</h4>
+          </div> -->
         </td>
 
         <td>
           <form method="POST" action="/cart">
             <input type="hidden" name="name" data-th-value="${name}" />
+            <input type="hidden" name="contents" data-th-value="${contents}" />
 
             <div>
               <label for="item">Item:</label>

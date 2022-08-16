@@ -11,42 +11,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import myapp.core.day18_cart.services.CartService;
-
 @Controller
 @RequestMapping(path = "/cart")
 public class CartController {
-
-  @Autowired
-  private CartService cartSvc;
 
   @PostMapping
   public String postCart(@RequestBody MultiValueMap<String, String> form, Model model) {
 
     String name = form.getFirst("name");
-    if (isNull(name))
+    if ((null == name) || (name.trim().length() <= 0))
       name = "anonymous";
 
-    String c = form.getFirst("contents");
-    List<String> cart = new LinkedList<>();
-    if (!isNull(c))
-      cart = cartSvc.deserialize(c);
-
     String item = form.getFirst("item");
-    if (!isNull(item))
-      cart.add(item);
+    Integer quantity = Integer.parseInt(form.getFirst("quantity"));
 
-    model.addAttribute("displayName", name.toUpperCase());
-    model.addAttribute("contents", cartSvc.serialize(cart));
-    model.addAttribute("cart", cart);
-    model.addAttribute("empty", cart.isEmpty());
-    model.addAttribute("name", name);
+    model.addAttribute("name", name.toUpperCase());
 
     return "cart";
-
   }
 
-  private boolean isNull(String s) {
-    return ((null == s) || s.trim().length() <= 0);
-  }
 }
